@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+           background-color: whitesmoke;
+        }
+        .up{
+           margin-left: 25px;
+           padding:0px;
+           padding-top: 1px;
+           border-left: solid 25px transparent;
+           border-right: solid 25px transparent;
+           border-bottom: solid 50px grey;
+           border-top: none;
+          }
+      .down{
+           margin-left: 25px;
+           padding:0px;
+           padding-top: 1px;
+           border-left: 25px solid transparent;
+           border-right: 25px solid transparent;
+           border-top: solid 50px grey;
+           border-bottom: none;
+          }
+      .left{
+           padding: 0px;
+           padding-top: 1px;
+           border-top: solid 25px transparent;
+           border-bottom: solid 25px transparent;
+           border-right: solid 50px grey;
+           border-left: none;
+          }
+      .right {
+           margin-left: 5px;
+           padding: 0px;
+           padding-top: 1px;
+           border-top: solid 25px transparent;
+           border-bottom: solid 25px transparent;
+           border-left: solid 50px grey;
+           border-right: none;
+          }
+      #vcam {
+           width: 630px;
+           height: 300px;
+           margin-left: 0px;
+           border: 3px solid #ccc;
+           background: black;
+        }
+      #butt {
+           margin-left: 650px;
+           width: 120px;
+           height: 45px;
+           cursor: pointer;
+        }
+     </style>
+</head>
+<body>
+    <h1>WEBCAM</h1>
+    <video id="vcam" style="margin-left: 400px;"></video>
+    <br>
+    <button id="butt" onclick="activatecam()">Activate</button>
+        <div style="margin-top: 125px;">
+         <div><button class="up"></button></div>
+         <div><button class="left"></button><button class="right"></button></div>
+         <div><button class="down"></button></div></div>
+         <script>
+            function activatecam(){
+               let media=navigator.mediaDevices
+               if (!media || !media.getUserMedia) {
+                  console.log("getUserMedia() not supported.");
+                  return;
+               }
+               media.getUserMedia({
+                  video: true
+               })
+               .then(function(stream) {
+                  var camera = document.getElementById('vcam');
+                  if ("srcObject" in camera) {
+                     camera.srcObject = stream;
+                  } else {
+                     camera.src = window.URL.createObjectURL(stream);
+                  }
+                  camera.onloadedmetadata = function(e) {
+                     camera.play();
+                  };
+               })
+            }
+         </script> 
+</body>
+</html>
